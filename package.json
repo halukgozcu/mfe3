@@ -1,0 +1,20 @@
+{
+    "private": true,
+    "name": "mfe3",
+    "workspaces": [
+        "apps/root",
+        "apps/apple",
+        "apps/banana",
+        "apps/camel"
+    ],
+    "scripts": {
+      "clean": "rm -rf */dist",
+      "build:remotes": "concurrently \"npm run build -w apple\" \"npm run build -w banana\" \"npm run build -w camel\"",
+      "preview:remotes": "concurrently \"npm run preview -w apple\" \"npm run preview -w banana\" \"npm run preview -w camel\"",
+      "dev:root": "npm run dev -w root",
+      "dev": "npm run clean && npm run build:remotes && concurrently \"npm run preview:remotes\" \"npm run dev:root\""
+    },
+    "devDependencies": {
+      "concurrently": "^8.2.2"
+    }
+}
