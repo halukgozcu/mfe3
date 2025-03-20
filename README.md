@@ -1,47 +1,110 @@
 # Micro Frontend Application
 
+This project demonstrates a micro frontend architecture using Vue 3, Vite, and Module Federation.
+
+## Applications
+
+- Root App (Port 18000) - Container application
+- Apple App (Port 18001) - Micro frontend #1
+- Banana App (Port 18002) - Micro frontend #2
+- Camel App (Port 18003) - Micro frontend #3
+
 ## Prerequisites
 
-Before running the application, make sure you have [Node.js](https://nodejs.org/) installed on your system.
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Installation
+## Development
 
-1. Install the project dependencies:
+### Local Development (Without Docker)
+
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Install concurrently package globally (if not already installed):
-```bash
-npm install -g concurrently
-```
-
-## Development
-
-To run the application in development mode:
-
+2. Start all applications:
 ```bash
 npm run dev
 ```
 
-This command uses `concurrently` to run multiple npm scripts simultaneously. Make sure you have properly configured your package.json scripts section for concurrent execution.
+### Docker Development
 
-### Note
-
-If you encounter any issues with concurrently, you can also install it as a dev dependency:
-
+1. Build the Docker images:
 ```bash
-npm install --save-dev concurrently
+docker-compose build
 ```
 
-Then update your package.json scripts accordingly:
+2. Start the containers:
+```bash
+docker-compose up
+```
 
-```json
-{
-  "scripts": {
-    "dev": "concurrently \"npm run dev:app1\" \"npm run dev:app2\""
-  }
-}
+3. Start in detached mode (optional):
+```bash
+docker-compose up -d
+```
+
+4. View logs:
+```bash
+docker-compose logs -f
+```
+
+5. Stop the containers:
+```bash
+docker-compose down
+```
+
+## Accessing the Applications
+
+After starting the applications, you can access them at:
+
+- Root App: http://localhost:18000
+- Apple App: http://localhost:18001
+- Banana App: http://localhost:18002
+- Camel App: http://localhost:18003
+
+## Testing
+
+### Local Testing
+```bash
+npm test
+```
+
+### Docker Testing
+1. Build test images:
+```bash
+docker-compose -f docker-compose.yml build
+```
+
+2. Run tests in containers:
+```bash
+docker-compose -f docker-compose.yml run root npm test
+docker-compose -f docker-compose.yml run apple npm test
+docker-compose -f docker-compose.yml run banana npm test
+docker-compose -f docker-compose.yml run camel npm test
+```
+
+## Troubleshooting
+
+### Common Docker Issues
+
+1. Port conflicts:
+```bash
+docker-compose down
+docker container prune
+```
+
+2. Clean Docker cache:
+```bash
+docker-compose build --no-cache
+```
+
+3. Reset Docker environment:
+```bash
+docker-compose down -v
+docker-compose up --build
 ```
 
 ## License
