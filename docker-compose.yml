@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  root:
+    build:
+      context: ./apps/root
+      dockerfile: ../../Dockerfile.base
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_APP_APPLE_URL=http://localhost:18001
+      - VITE_APP_BANANA_URL=http://localhost:18002
+      - VITE_APP_CAMEL_URL=http://localhost:18003
+      - NODE_ENV=production
+    ports:
+      - "18000:18000"
+    networks:
+      - mfe-network
+
+  apple:
+    build:
+      context: ./apps/apple
+      dockerfile: ../../Dockerfile.base
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=18001
+      - NODE_ENV=production
+    ports:
+      - "18001:18001"
+    networks:
+      - mfe-network
+
+  banana:
+    build:
+      context: ./apps/banana
+      dockerfile: ../../Dockerfile.base
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=18002
+      - NODE_ENV=production
+    ports:
+      - "18002:18002"
+    networks:
+      - mfe-network
+
+  camel:
+    build:
+      context: ./apps/camel
+      dockerfile: ../../Dockerfile.base
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=18003
+      - NODE_ENV=production
+    ports:
+      - "18003:18003"
+    networks:
+      - mfe-network
+
+networks:
+  mfe-network:
+    driver: bridge

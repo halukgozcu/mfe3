@@ -30,7 +30,7 @@ export default defineConfig({
     }
   },
   server: {
-    port: 7001,
+    port: 18001,
     cors: true,
     strictPort: true,
     headers: {
@@ -38,7 +38,7 @@ export default defineConfig({
     }
   },
   preview: {
-    port: 7001,
+    port: 18001,
     strictPort: true,
     headers: {
       "Access-Control-Allow-Origin": "*"

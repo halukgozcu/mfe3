@@ -1,0 +1,22 @@
+FROM node:20-alpine
+
+WORKDIR /app
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source
+COPY . .
+
+# Build app with production environment
+RUN NODE_ENV=production npm run build
+
+# Expose port
+EXPOSE 80
+
+# Set host environment variable
+ENV HOST=0.0.0.0
+
+# Start the app using preview mode
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]
