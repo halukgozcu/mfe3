@@ -7,6 +7,7 @@ services:
       dockerfile: ../../Dockerfile.base
     environment:
       - VITE_HOST=0.0.0.0
+      - VITE_PORT=18000
       - VITE_APP_APPLE_URL=http://localhost:18001
       - VITE_APP_BANANA_URL=http://localhost:18002
       - VITE_APP_CAMEL_URL=http://localhost:18003

@@ -3,10 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import federation from '@originjs/vite-plugin-federation'
 
 export default defineConfig(({ command, mode }) => {
-  const getRemoteUrl = (port) => {
-    return command === 'serve' 
-      ? `http://localhost:${port}/assets/remoteEntry.js`
-      : `http://localhost:${port}/assets/remoteEntry.js`
+  const getRemoteUrl = (envUrl, serviceName, defaultPort) => {
+    // Use environment variable or fallback to default local development URL
+    const baseUrl = envUrl || `http://localhost:${defaultPort}`;
+    console.log(`${serviceName} URL:`, baseUrl);
+    return `${baseUrl}/assets/remoteEntry.js`;
   }
 
   return {
@@ -15,9 +16,9 @@ export default defineConfig(({ command, mode }) => {
       federation({
         name: 'root',
         remotes: {
-          apple: getRemoteUrl(18001),
-          banana: getRemoteUrl(18002),
-          camel: getRemoteUrl(18003)
+          apple: getRemoteUrl(process.env.VITE_APP_APPLE_URL, 'apple', 18001),
+          banana: getRemoteUrl(process.env.VITE_APP_BANANA_URL, 'banana', 18002),
+          camel: getRemoteUrl(process.env.VITE_APP_CAMEL_URL, 'camel', 18003)
         },
         shared: ['vue']
       })
@@ -29,13 +30,13 @@ export default defineConfig(({ command, mode }) => {
       modulePreload: false
     },
     server: { 
-      port: 18000,
+      port: parseInt(process.env.VITE_PORT || '18000'),
       strictPort: true,
       cors: true,
       host: '0.0.0.0'
     },
     preview: {
-      port: 18000,
+      port: parseInt(process.env.VITE_PORT || '18000'),
       strictPort: true,
       cors: true,
       host: '0.0.0.0'
