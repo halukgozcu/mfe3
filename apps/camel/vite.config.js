@@ -23,20 +23,27 @@ export default defineConfig({
       ext: '.gz',
     })
   ],
+  css: {
+    postcss: {},
+    modules: {
+      scopeBehaviour: 'local'
+    }
+  },
   build: {
     target: 'esnext',
-    minify: 'terser',
-    cssCodeSplit: true,
+    minify: false,
+    cssCodeSplit: false,
     modulePreload: {
       polyfill: false
     },
     outDir: 'dist',
     rollupOptions: {
       output: {
+        minifyInternalExports: false,
         format: 'esm',
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]'
       }
     }
   },

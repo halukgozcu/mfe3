@@ -20,14 +20,27 @@ export default defineConfig(({ command, mode }) => {
           banana: getRemoteUrl(process.env.VITE_APP_BANANA_URL, 'banana', 18002),
           camel: getRemoteUrl(process.env.VITE_APP_CAMEL_URL, 'camel', 18003)
         },
-        shared: ['vue', 'pinia', 'vue-router']
+        shared: {
+          vue: {
+            singleton: true,
+            requiredVersion: false
+          },
+          'vue-router': {
+            singleton: true,
+            requiredVersion: false
+          },
+          pinia: {
+            singleton: true,
+            requiredVersion: false
+          }
+        }
       }),
       viteCompression({ algorithm: 'brotliCompress' }) // Add Brotli compression
     ],
     build: {
       target: 'esnext',
-      minify: 'terser', // Enable minification
-      cssCodeSplit: true,
+      minify: false, // Disable minification for debugging
+      cssCodeSplit: false,
       modulePreload: true,
       rollupOptions: {
         output: {

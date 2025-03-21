@@ -12,7 +12,7 @@ export default defineConfig({
       exposes: {
         './AppleApp': './src/App.vue',
         './Home': './src/views/Home.vue',
-        './About': './src/views/About.vue',
+        './About': './src/pages/About.vue', // Fixed path to match actual file location
         './Profile': './src/views/Profile.vue',
         './store': './src/store/userStore.js'
       },
@@ -26,20 +26,26 @@ export default defineConfig({
       ext: '.gz',
     })
   ],
+  css: {
+    postcss: {},
+    modules: {
+      scopeBehaviour: 'local'
+    }
+  },
   build: {
     target: 'esnext',
-    minify: 'terser',
-    cssCodeSplit: true,
+    minify: false, // Disable minification for debugging
+    cssCodeSplit: false, // Disable CSS code splitting temporarily
     modulePreload: {
       polyfill: false
     },
-    outDir: 'dist',
     rollupOptions: {
       output: {
+        minifyInternalExports: false,
         format: 'esm',
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        entryFileNames: 'assets/[name].js', // Remove hash for debugging
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]'
       }
     }
   },
