@@ -1,5 +1,11 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+import { useUserStore } from './store/userStore'
+import { usePinia } from './composables/usePinia'
+
+// Initialize pinia for this component
+const pinia = usePinia()
+const userStore = useUserStore(pinia)
 </script>
 
 <template>
@@ -15,6 +21,11 @@ import HelloWorld from './components/HelloWorld.vue'
   <div class="apple-app">
     <h2>Apple MFE App</h2>
     <p>This is the Apple micro frontend application</p>
+    <div class="user-info" v-if="userStore.name || userStore.surname">
+      <h3>Current User:</h3>
+      <p>Name: {{ userStore.name }}</p>
+      <p>Surname: {{ userStore.surname }}</p>
+    </div>
   </div>
 </template>
 

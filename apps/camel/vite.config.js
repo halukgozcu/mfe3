@@ -9,9 +9,10 @@ export default defineConfig({
       name: 'camel',
       filename: 'remoteEntry.js',
       exposes: {
-        './CamelApp': './src/App.vue'
+        './CamelApp': './src/App.vue',
+        './userAgeStore': './src/store/userAgeStore.js'
       },
-      shared: ['vue']
+      shared: ['vue', 'pinia', 'vue-router']
     })
   ],
   build: {

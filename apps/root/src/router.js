@@ -1,10 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './components/Home.vue'
 
-const AppleApp = () => import('apple/AppleApp')
-const BananaApp = () => import('banana/BananaApp')
-const CamelApp = () => import('camel/CamelApp')
-
 const routes = [
   {
     path: '/',
@@ -14,17 +10,19 @@ const routes = [
   {
     path: '/apple',
     name: 'Apple',
-    component: AppleApp
+    component: () => import('apple/AppleApp').then(module => {
+      return module.default
+    })
   },
   {
     path: '/banana',
     name: 'Banana',
-    component: BananaApp
+    component: () => import('banana/BananaApp')
   },
   {
     path: '/camel',
     name: 'Camel',
-    component: CamelApp
+    component: () => import('camel/CamelApp')
   }
 ]
 

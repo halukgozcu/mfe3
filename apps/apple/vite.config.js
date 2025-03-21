@@ -9,9 +9,10 @@ export default defineConfig({
       name: 'apple',
       filename: 'remoteEntry.js',
       exposes: {
-        './AppleApp': './src/App.vue'
+        './AppleApp': './src/App.vue',
+        './store': './src/store/userStore.js'
       },
-      shared: ['vue']
+      shared: ['vue', 'pinia', 'vue-router']
     })
   ],
   build: {

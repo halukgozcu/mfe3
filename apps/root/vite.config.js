@@ -20,7 +20,7 @@ export default defineConfig(({ command, mode }) => {
           banana: getRemoteUrl(process.env.VITE_APP_BANANA_URL, 'banana', 18002),
           camel: getRemoteUrl(process.env.VITE_APP_CAMEL_URL, 'camel', 18003)
         },
-        shared: ['vue']
+        shared: ['vue', 'pinia', 'vue-router']
       })
     ],
     build: {

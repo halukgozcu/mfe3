@@ -9,9 +9,10 @@ export default defineConfig({
       name: 'banana',
       filename: 'remoteEntry.js',
       exposes: {
-        './BananaApp': './src/App.vue'
+        './BananaApp': './src/App.vue',
+        './userAgeStore': './src/store/userAgeStore.js'
       },
-      shared: ['vue']
+      shared: ['vue', 'pinia', 'vue-router']
     })
   ],
   build: {
