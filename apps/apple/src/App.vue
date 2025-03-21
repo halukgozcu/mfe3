@@ -1,26 +1,15 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 import { useUserStore } from './store/userStore'
 import { usePinia } from './composables/usePinia'
 
-// Initialize pinia for this component
 const pinia = usePinia()
 const userStore = useUserStore(pinia)
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
   <div class="apple-app">
-    <h2>Apple MFE App</h2>
-    <p>This is the Apple micro frontend application</p>
+    <router-view></router-view>
+
     <div class="user-info" v-if="userStore.name || userStore.surname">
       <h3>Current User:</h3>
       <p>Name: {{ userStore.name }}</p>
@@ -49,5 +38,23 @@ const userStore = useUserStore(pinia)
   border: 2px solid red;
   padding: 20px;
   margin: 10px;
+}
+
+.apple-nav {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+.apple-nav a {
+  margin: 0 10px;
+  color: #666;
+  text-decoration: none;
+}
+
+.apple-nav a.router-link-active {
+  color: #42b883;
+  font-weight: bold;
 }
 </style>

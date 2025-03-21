@@ -2,6 +2,8 @@
     <nav class="navbar">
         <router-link to="/">Home</router-link> |
         <router-link to="/apple">Apple App</router-link> |
+        <router-link to="/apple/about">Apple About</router-link> |
+        <router-link to="/apple/profile">Apple Profile</router-link> |
         <router-link to="/banana">Banana App</router-link> |
         <router-link to="/camel">Camel App</router-link>
     </nav>

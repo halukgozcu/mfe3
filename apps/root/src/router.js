@@ -9,10 +9,24 @@ const routes = [
   },
   {
     path: '/apple',
-    name: 'Apple',
-    component: () => import('apple/AppleApp').then(module => {
-      return module.default
-    })
+    component: () => import('apple/AppleApp'),
+    children: [
+      {
+        path: '',
+        name: 'Apple',
+        component: () => import('apple/Home')
+      },
+      {
+        path: 'about',
+        name: 'AppleAbout',
+        component: () => import('apple/About')
+      },
+      {
+        path: 'profile',
+        name: 'AppleProfile',
+        component: () => import('apple/Profile')
+      }
+    ]
   },
   {
     path: '/banana',

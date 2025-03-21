@@ -10,6 +10,9 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       exposes: {
         './AppleApp': './src/App.vue',
+        './Home': './src/views/Home.vue',
+        './About': './src/views/About.vue',
+        './Profile': './src/views/Profile.vue',
         './store': './src/store/userStore.js'
       },
       shared: ['vue', 'pinia', 'vue-router']
