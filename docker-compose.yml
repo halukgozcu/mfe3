@@ -8,9 +8,9 @@ services:
     environment:
       - VITE_HOST=0.0.0.0
       - VITE_PORT=18000
-      - VITE_APP_APPLE_URL=http://localhost:18001
-      - VITE_APP_BANANA_URL=http://localhost:18002
-      - VITE_APP_CAMEL_URL=http://localhost:18003
+      - VITE_APP_APPLE_URL=http://apple:18001
+      - VITE_APP_BANANA_URL=http://banana:18002
+      - VITE_APP_CAMEL_URL=http://camel:18003
       - NODE_ENV=production
     ports:
       - "18000:18000"
