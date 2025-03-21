@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from '@originjs/vite-plugin-federation'
+import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig(({ command, mode }) => {
   const getRemoteUrl = (envUrl, serviceName, defaultPort) => {
-    // Use environment variable or fallback to default local development URL
-    const baseUrl = envUrl || `http://localhost:${defaultPort}`;
-    console.log(`${serviceName} URL:`, baseUrl);
-    return `${baseUrl}/assets/remoteEntry.js`;
+    const baseUrl = envUrl || `http://localhost:${defaultPort}`
+    console.log(`${serviceName} URL:`, baseUrl)
+    return `${baseUrl}/assets/remoteEntry.js`
   }
 
   return {
@@ -21,15 +21,24 @@ export default defineConfig(({ command, mode }) => {
           camel: getRemoteUrl(process.env.VITE_APP_CAMEL_URL, 'camel', 18003)
         },
         shared: ['vue', 'pinia', 'vue-router']
-      })
+      }),
+      viteCompression({ algorithm: 'brotliCompress' }) // Add Brotli compression
     ],
     build: {
       target: 'esnext',
-      minify: false,
-      cssCodeSplit: false,
-      modulePreload: false
+      minify: 'terser', // Enable minification
+      cssCodeSplit: true,
+      modulePreload: true,
+      rollupOptions: {
+        output: {
+          format: 'esm',
+          entryFileNames: 'assets/[name].[hash].js', // Add hash for cache busting
+          chunkFileNames: 'assets/[name].[hash].js',
+          assetFileNames: 'assets/[name].[hash].[ext]'
+        }
+      }
     },
-    server: { 
+    server: {
       port: parseInt(process.env.VITE_PORT || '18000'),
       strictPort: true,
       cors: true,

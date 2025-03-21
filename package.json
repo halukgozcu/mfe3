@@ -12,7 +12,9 @@
       "build:remotes": "concurrently \"npm run build -w apple\" \"npm run build -w banana\" \"npm run build -w camel\"",
       "preview:remotes": "concurrently \"npm run preview -w apple\" \"npm run preview -w banana\" \"npm run preview -w camel\"",
       "dev:root": "npm run dev -w root",
-      "dev": "npm run clean && npm run build:remotes && concurrently \"npm run preview:remotes\" \"npm run dev:root\""
+      "dev": "npm run clean && npm run build:remotes && concurrently \"npm run preview:remotes\" \"npm run dev:root\"",
+      "docker:clean": "docker-compose down && docker system prune -f",
+      "install:all": "npm install && npm install -w apple && npm install -w banana && npm install -w camel && npm install -w root"
     },
     "devDependencies": {
       "concurrently": "^8.2.2"

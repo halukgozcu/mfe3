@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from '@originjs/vite-plugin-federation'
+import compression from 'vite-plugin-compression'
 
 export default defineConfig({
   plugins: [
@@ -16,20 +17,29 @@ export default defineConfig({
         './store': './src/store/userStore.js'
       },
       shared: ['vue', 'pinia', 'vue-router']
+    }),
+    compression({
+      verbose: true,
+      disable: false,
+      threshold: 10240,
+      algorithm: 'gzip',
+      ext: '.gz',
     })
   ],
   build: {
     target: 'esnext',
-    minify: false,
-    cssCodeSplit: false,
-    modulePreload: false,
+    minify: 'terser',
+    cssCodeSplit: true,
+    modulePreload: {
+      polyfill: false
+    },
     outDir: 'dist',
     rollupOptions: {
       output: {
         format: 'esm',
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name].[ext]'
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
       }
     }
   },
