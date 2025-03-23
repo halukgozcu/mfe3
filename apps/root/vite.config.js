@@ -1,12 +1,14 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from '@originjs/vite-plugin-federation'
 import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+
   const getRemoteUrl = (envUrl, serviceName, defaultPort) => {
     const baseUrl = envUrl || `http://localhost:${defaultPort}`
-    console.log(`${serviceName} URL:`, baseUrl)
+    console.log(`[${mode}] ${serviceName} URL:`, baseUrl)
     return `${baseUrl}/assets/remoteEntry.js`
   }
 
@@ -39,29 +41,35 @@ export default defineConfig(({ command, mode }) => {
     ],
     build: {
       target: 'esnext',
-      minify: false, // Disable minification for debugging
-      cssCodeSplit: false,
+      minify: mode === 'production',
+      cssCodeSplit: mode === 'production',
       modulePreload: true,
       rollupOptions: {
         output: {
           format: 'esm',
-          entryFileNames: 'assets/[name].[hash].js', // Add hash for cache busting
-          chunkFileNames: 'assets/[name].[hash].js',
-          assetFileNames: 'assets/[name].[hash].[ext]'
+          entryFileNames: mode === 'production' 
+            ? 'assets/[name].[hash].js'
+            : 'assets/[name].js',
+          chunkFileNames: mode === 'production'
+            ? 'assets/[name].[hash].js'
+            : 'assets/[name].js',
+          assetFileNames: mode === 'production'
+            ? 'assets/[name].[hash].[ext]'
+            : 'assets/[name].[ext]'
         }
       }
     },
     server: {
-      port: parseInt(process.env.VITE_PORT || '18000'),
+      port: parseInt(env.VITE_ROOT_PORT || '18000'),
       strictPort: true,
       cors: true,
-      host: '0.0.0.0'
+      host: env.VITE_HOST
     },
     preview: {
-      port: parseInt(process.env.VITE_PORT || '18000'),
+      port: parseInt(env.VITE_ROOT_PORT || '18000'),
       strictPort: true,
       cors: true,
-      host: '0.0.0.0'
+      host: env.VITE_HOST
     }
   }
 })

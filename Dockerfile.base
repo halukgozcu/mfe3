@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Build arguments
+ARG NODE_ENV=local
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Build the app with the specified environment
+RUN npm run build -- --mode ${NODE_ENV}
+
+EXPOSE 80
+
+# Start Vite preview server
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "80"]

@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  root:
+    build:
+      context: ./apps/root
+      dockerfile: ../../Dockerfile.base
+      args:
+        - NODE_ENV=${NODE_ENV:-local}
+    environment:
+      - VITE_HOST=${VITE_HOST}
+      - VITE_PORT=${VITE_ROOT_PORT}
+      - VITE_APP_APPLE_URL=${VITE_APP_APPLE_URL}
+      - VITE_APP_BANANA_URL=${VITE_APP_BANANA_URL}
+      - VITE_APP_CAMEL_URL=${VITE_APP_CAMEL_URL}
+      - NODE_ENV=${NODE_ENV:-local}
+    ports:
+      - "${VITE_ROOT_PORT:-18000}:80"
+    depends_on:
+      - apple
+      - banana
+      - camel
+    networks:
+      - mfe-network
+
+  apple:
+    build:
+      context: ./apps/apple
+      dockerfile: ../../Dockerfile.base
+      args:
+        - NODE_ENV=${NODE_ENV:-local}
+    environment:
+      - VITE_HOST=${VITE_HOST}
+      - VITE_PORT=${VITE_APPLE_PORT}
+      - NODE_ENV=${NODE_ENV:-local}
+    ports:
+      - "${VITE_APPLE_PORT:-18001}:80"
+    networks:
+      - mfe-network
+
+  banana:
+    build:
+      context: ./apps/banana
+      dockerfile: ../../Dockerfile.base
+      args:
+        - NODE_ENV=${NODE_ENV:-local}
+    environment:
+      - VITE_HOST=${VITE_HOST}
+      - VITE_PORT=${VITE_BANANA_PORT}
+      - NODE_ENV=${NODE_ENV:-local}
+    ports:
+      - "${VITE_BANANA_PORT:-18002}:80"
+    networks:
+      - mfe-network
+
+  camel:
+    build:
+      context: ./apps/camel
+      dockerfile: ../../Dockerfile.base
+      args:
+        - NODE_ENV=${NODE_ENV:-local}
+    environment:
+      - VITE_HOST=${VITE_HOST}
+      - VITE_PORT=${VITE_CAMEL_PORT}
+      - NODE_ENV=${NODE_ENV:-local}
+    ports:
+      - "${VITE_CAMEL_PORT:-18003}:80"
+    networks:
+      - mfe-network
+
+networks:
+  mfe-network:
+    driver: bridge

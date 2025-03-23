@@ -13,7 +13,15 @@
       "preview:remotes": "concurrently \"npm run preview -w apple\" \"npm run preview -w banana\" \"npm run preview -w camel\"",
       "dev:root": "npm run dev -w root",
       "dev": "npm run clean && npm run build:remotes && concurrently \"npm run preview:remotes\" \"npm run dev:root\"",
-      "install:all": "npm install && npm install -w apple && npm install -w banana && npm install -w camel && npm install -w root"
+      "install:all": "npm install && npm install -w apple && npm install -w banana && npm install -w camel && npm install -w root",
+      "dev:local": "docker-compose --env-file .env.local up",
+      "dev:development": "docker-compose --env-file .env.development up",
+      "dev:staging": "docker-compose --env-file .env.staging up",
+      "dev:production": "docker-compose --env-file .env.production up",
+      "build:local": "docker-compose --env-file .env.local build",
+      "build:development": "docker-compose --env-file .env.development build",
+      "build:staging": "docker-compose --env-file .env.staging build",
+      "build:production": "docker-compose --env-file .env.production build"
     },
     "devDependencies": {
       "concurrently": "^8.2.2"
