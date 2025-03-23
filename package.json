@@ -14,16 +14,17 @@
       "dev:root": "npm run dev -w root",
       "dev": "npm run clean && npm run build:remotes && concurrently \"npm run preview:remotes\" \"npm run dev:root\"",
       "install:all": "npm install && npm install -w apple && npm install -w banana && npm install -w camel && npm install -w root",
-      "dev:local": "docker-compose --env-file .env.local up",
-      "dev:development": "docker-compose --env-file .env.development up",
-      "dev:staging": "docker-compose --env-file .env.staging up",
-      "dev:production": "docker-compose --env-file .env.production up",
-      "build:local": "docker-compose --env-file .env.local build",
-      "build:development": "docker-compose --env-file .env.development build",
-      "build:staging": "docker-compose --env-file .env.staging build",
-      "build:production": "docker-compose --env-file .env.production build"
+      "dev:local": "docker-compose --env-file ./environments/base.env --env-file ./environments/local.env up",
+      "dev:development": "docker-compose --env-file ./environments/base.env --env-file ./environments/development.env up",
+      "dev:staging": "docker-compose --env-file ./environments/base.env --env-file ./environments/staging.env up",
+      "dev:production": "docker-compose --env-file ./environments/base.env --env-file ./environments/production.env up",
+      "build:local": "docker-compose --env-file ./environments/base.env --env-file ./environments/local.env build",
+      "build:development": "docker-compose --env-file ./environments/base.env --env-file ./environments/development.env build",
+      "build:staging": "docker-compose --env-file ./environments/base.env --env-file ./environments/staging.env build",
+      "build:production": "docker-compose --env-file ./environments/base.env --env-file ./environments/production.env build"
     },
     "devDependencies": {
-      "concurrently": "^8.2.2"
+      "concurrently": "^8.2.2",
+      "dotenv": "^16.0.3"
     }
 }
